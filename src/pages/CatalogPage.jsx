@@ -1,51 +1,59 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ProductCard from "../components/ProductCard";
 
-function CatalogPage({ products, onAddToCart }) {
-  // regular js comment
-  const categories = ["All", "Mugs", "Planters", "Plates"];
-  const [selectedCategory, setSelectedCategory] = useState("All");
+function CatalogPage({ albums, onAddToCart }) {
+  const [selectedGenre, setSelectedGenre] = useState("All");
 
-  //    put a safety check - what happens if data is bad or missing
-  const validProducts = products || [];
+  // Generate unique genres from the album dataset
+  const genres = ["All", ...new Set(albums.map((album) => album.genre))];
 
-  const filteredProducts =
-    selectedCategory === "All"
-      ? validProducts
-      : validProducts.filter((p) => p.category === selectedCategory);
+  // Filter albums based on selected genre
+  const filteredAlbums =
+    selectedGenre === "All"
+      ? albums
+      : albums.filter((album) => album.genre === selectedGenre);
 
   return (
-    <div className="catalog-container">
-      <header className="catalog-hero">
-        <h1>Handcrafted Functional Stoneware</h1>
+    <main className="main-content">
+      <section className="catalog-hero">
+        <h1>Welcome to VinylVault</h1>
+
         <p>
-          Sustainable ceramics shaped by hand for intentional daily rituals.
+          Discover timeless records, legendary artists, and essential albums for
+          your collection.
         </p>
-      </header>
+      </section>
 
-      {/**this is how to comment INSIDE THE RETURN stmnt */}
-      <div className="filter-bar">
-        {categories.map((cat) => {
-          <button
-            key={cat}
-            className={`filter-pill ${selectedCategory === cat ? "active" : ""}`}
-            onClick={() => setSelectedCategory(cat)}
-          >
-            {cat}
-          </button>;
-        })}
-      </div>
+      <section>
+        <div className="filter-bar">
+          {genres.map((genre) => (
+            <button
+              key={genre}
+              className={
+                selectedGenre === genre ? "filter-pill active" : "filter-pill"
+              }
+              onClick={() => setSelectedGenre(genre)}
+            >
+              {genre}
+            </button>
+          ))}
+        </div>
 
-      <div className="product-grid">
-        {filteredProducts.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onAddToCart={onAddToCart}
-          />
-        ))}
-      </div>
-    </div>
+        <div className="product-grid">
+          {filteredAlbums.length > 0 ? (
+            filteredAlbums.map((album) => (
+              <ProductCard
+                key={album.id}
+                album={album}
+                onAddToCart={onAddToCart}
+              />
+            ))
+          ) : (
+            <p>No albums found in this genre.</p>
+          )}
+        </div>
+      </section>
+    </main>
   );
 }
 

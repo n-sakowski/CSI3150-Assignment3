@@ -1,157 +1,211 @@
-import React, { useState } from "react";
-// replace react-router with 'react-router-dom' after its install
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const CheckoutPage = ({ cart, onClearCart }) => {
-  // check whether the user has confirmed payment submission or not
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  // initialize the form field data object
+function CheckoutPage({ cart, cartSubtotal, onCheckoutComplete }) {
+  // Controlled form state
   const [formData, setFormData] = useState({
     fullName: "",
-    email: "",
-    shippingAddress: "",
-    zipCode: "",
+    address: "",
+    city: "",
+    postalCode: "",
+    cardDetails: "",
   });
 
-  //   compute the cart total for the invoice calc
-  const subtotal = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0,
-  );
+  const [orderConfirmed, setOrderConfirmed] = useState(false);
 
-  //   add taxes and compute total
-  const taxes = subtotal * 0.06;
-  const total = subtotal + taxes;
-
-  // <MISSED THIS FUNCTION IN CLASS>event listener to handle form input fields
+  // Handle form input changes
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  //   event listener to handle form submission
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    onClearCart();
+
+    const allFieldsFilled = Object.values(formData).every(
+      (value) => value.trim() !== "",
+    );
+
+    if (!allFieldsFilled) {
+      alert("Please complete all checkout fields.");
+      return;
+    }
+
+    if (cart.length === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+    // Basic demonstration validation
+    const cardNumber = formData.cardDetails.replace(/\s/g, "");
+
+    if (!/^\d{13,19}$/.test(cardNumber)) {
+      alert("Please enter a valid card number.");
+      return;
+    }
+
+    // Complete checkout
+    onCheckoutComplete();
+    setOrderConfirmed(true);
   };
 
-  if (isSubmitted) {
+  // Successful order confirmation
+  if (orderConfirmed) {
     return (
-      <div className="checkout-success">
-        <h2>Order Placed Successfully</h2>
-        <p>
-          THank you, {formData.fullName}. A confirmation email is sent to{" "}
-          {formData.email}. Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Amet quisquam quod impedit dolorum animi eius iusto, non soluta
-          autem officia nostrum totam obcaecati quis, fugiat nihil possimus
-          voluptates illo dolores.
-        </p>
-        <Link className="btn btn-primary" to="/">
-          Return to HomePage
-        </Link>
-      </div>
+      <main className="main-content">
+        <div className="order-summary-card">
+          <h1>Order Confirmed!</h1>
+
+          <p>
+            Thank you for shopping at VinylVault. Your order has been
+            successfully placed.
+          </p>
+
+          <Link to="/" className="btn btn-primary">
+            Return to Collection
+          </Link>
+        </div>
+      </main>
     );
   }
 
-  // edge cases
+  // Empty cart handling
   if (cart.length === 0) {
     return (
-      <div className="empty-cart-page">
-        <h2> Your cart is empty.</h2>
-        <Link className="btn btn-secondary" to="/">
-          Shop for some item please.
+      <main className="main-content">
+        <h1>Your Cart Is Empty</h1>
+
+        <p>Add some albums before proceeding to checkout.</p>
+
+        <Link to="/" className="btn btn-primary">
+          Browse Albums
         </Link>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="checkout-container">
-      <h1>Checkout and Order Confirmation</h1>
+    <main className="main-content">
+      <h1>Checkout</h1>
 
       <div className="checkout-grid">
-        {/* FORM element */}
-        <form className="checkout-form" onSubmit={handleSubmit}>
-          <h2>Shipping Information</h2>
-          <div className="form-group">
-            <label htmlFor="fullName"> Full Name *</label>
-            <input
-              type="text"
-              name="fullName"
-              id="fullName"
-              required
-              value={formData.fullName}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email"> Email *</label>
-            <input
-              type="text"
-              name="email"
-              id="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="shippingAddress"> Shipping Address *</label>
-            <input
-              type="text"
-              name="shippingAddress"
-              id="shippingAddress"
-              required
-              value={formData.shippingAddress}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="zipCode"> Zip Code*</label>
-            <input
-              type="text"
-              name="zipCode"
-              id="zipCode"
-              required
-              pattern="[0-9]{5}"
-              value={formData.zipCode}
-              onChange={handleChange}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary btn-block btn-lg">
-            Complete Order (${total.toFixed(2)})
-          </button>
-          {/* CHECK: handleSubmit and handleChange confusion */}
-        </form>
+        {/* Order Summary */}
+        <section className="order-summary-card">
+          <h2>Order Summary</h2>
 
-        {/* INVOICE or SUMMARY section */}
-        <aside className="order-summary-card">
-          <h3>Order Summary</h3>
-          <ul className="summary-list">
-            {cart.map((item) => (
-              <li key={item.id} className="summary-row">
-                <span>
-                  {item.name} &times; {item.quantity}
-                </span>
-                <span>${(item.price * item.quantity).toFixed(2)}</span>
-              </li>
-            ))}
-          </ul>
-          <hr />
-          <div className="summary-row">
-            <span>Subtotal:</span> <span>${subtotal.toFixed(2)}</span>
-          </div>
-          <div className="summary-row">
-            <span>Estimated Tax (6%):</span> <span>${taxes.toFixed(2)}</span>
-          </div>
+          {cart.map((item) => (
+            <div className="cart-item" key={item.id}>
+              <img
+                src={item.image}
+                alt={item.title}
+                className="cart-item-img"
+              />
+
+              <div className="cart-item-info">
+                <h3>{item.title}</h3>
+
+                <p>{item.artist}</p>
+
+                <p>Quantity: {item.quantity}</p>
+
+                <p>${(item.price * item.quantity).toFixed(2)}</p>
+              </div>
+            </div>
+          ))}
+
           <div className="summary-row total-row">
-            <span>Total:</span> <span>${total.toFixed(2)}</span>
+            <span>Subtotal</span>
+
+            <span>${cartSubtotal.toFixed(2)}</span>
           </div>
-        </aside>
+        </section>
+
+        {/* Checkout Form */}
+        <section>
+          <h2>Shipping & Payment Information</h2>
+
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="fullName">Full Name</label>
+
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="address">Address</label>
+
+              <input
+                type="text"
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="city">City</label>
+
+              <input
+                type="text"
+                id="city"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="postalCode">Postal Code</label>
+
+              <input
+                type="text"
+                id="postalCode"
+                name="postalCode"
+                value={formData.postalCode}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="cardDetails">Card Details (Demo Only)</label>
+
+              <input
+                type="text"
+                id="cardDetails"
+                name="cardDetails"
+                value={formData.cardDetails}
+                onChange={handleChange}
+                placeholder="Enter fictional test number"
+                autoComplete="off"
+                inputMode="numeric"
+                required
+              />
+            </div>
+
+            <button type="submit" className="btn btn-primary btn-block">
+              Place Order
+            </button>
+          </form>
+        </section>
       </div>
-    </div>
+    </main>
   );
-};
+}
 
 export default CheckoutPage;

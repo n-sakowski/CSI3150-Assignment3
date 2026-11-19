@@ -1,41 +1,37 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
-const ProductCard = ({ product, onAddToCart }) => {
-  // sanity check: make sure that product to display is not broken
-  if (!product) return null;
-
+function ProductCard({ album, onAddToCart }) {
   return (
     <article className="product-card">
-      <Link className="product-img-link" to={`/product/${product.id}`}>
-        <img
-          className="product-image"
-          src={product.image}
-          alt={product.name}
-          loading="lazy"
-        />
+      <Link to={`/album/${album.id}`}>
+        <img src={album.image} alt={album.title} className="product-image" />
       </Link>
+
       <div className="product-body">
-        <span className="product-category">{product.category}</span>
+        <span className="product-category">{album.genre}</span>
+
         <h3 className="product-title">
-          <Link to={`/product/${product.id}`}>{product.name}</Link>
+          <Link to={`/album/${album.id}`}>{album.title}</Link>
         </h3>
-        <p className="product-price">
-          $
-          {typeof product.price === "number"
-            ? product.price.toFixed(2)
-            : "Contact For Price"}
+
+        <p>{album.artist}</p>
+
+        <p className="product-price">${album.price.toFixed(2)}</p>
+
+        <p className="product-stock">
+          {album.stock > 0 ? `${album.stock} in stock` : "Out of stock"}
         </p>
+
         <button
-          className="btn btn-secondary btn-block"
-          type="button"
-          onClick={() => onAddToCart(product)}
+          className="btn btn-primary btn-block"
+          onClick={() => onAddToCart(album)}
+          disabled={album.stock <= 0}
         >
           Add to Cart
         </button>
       </div>
     </article>
   );
-};
+}
 
 export default ProductCard;

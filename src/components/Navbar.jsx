@@ -1,23 +1,28 @@
 import { Link } from "react-router-dom";
 
-function Navbar({ cart, onToggleCart }) {
-  // Calculate total number of albums in cart
+function Navbar({ cart, onCartClick }) {
+  // Calculate the total number of items in the cart
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <nav className="navbar">
-      <Link to="/" className="navbar-logo">
-        VinylVault
-      </Link>
+    <header className="site-header">
+      <div className="header-inner">
+        <Link to="/" className="brand-logo">
+          VinylVault
+        </Link>
 
-      <div className="navbar-links">
-        <Link to="/">Home</Link>
+        <nav className="nav-actions">
+          <Link to="/" className="nav-link">
+            Collection
+          </Link>
 
-        <button className="cart-button" onClick={onToggleCart}>
-          Cart ({cartCount})
-        </button>
+          <button className="btn-cart-badge" onClick={onCartClick}>
+            Cart
+            <span className="badge-pill">{cartCount}</span>
+          </button>
+        </nav>
       </div>
-    </nav>
+    </header>
   );
 }
 
