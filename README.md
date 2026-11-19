@@ -21,9 +21,7 @@ Project Directory Overview:
 VinylVault is designed using React and Vite. src/ contains the main application code, React components, page layouts, routing logic, and styling. public/ contains static Vite assets. node_modules contains npm dependencies.
 
 Component Tree:
-
-Component Tree
-
+```
 <App /> → src/App.jsx
   - State Ownership:
     - cart (Array): Stores albums and their quantities.
@@ -101,4 +99,5 @@ Component Tree
       - onUpdateQuantity (Function)
       - onRemoveFromCart (Function)
     - Displays cart items, manages quantities, and calculates totals.
+```
 
