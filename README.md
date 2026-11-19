@@ -6,8 +6,12 @@ Prerequisites to install:
 - Git
 
 Confirm that each prerequisite is installed by running
+
 **{prerequisite_name} -v**
+
 for each in the command prompt.
+
+---
 
 Install the project locally by opening a command prompt in the folder where you want this installed and running the following commands:
 
@@ -17,14 +21,20 @@ Install the project locally by opening a command prompt in the folder where you 
 
 **npm install**
 
+---
+
 Next, start the application by running:
 
 **npm run dev**
 
 A localhost link will be provided, probably http://localhost:5173/. Here is where the VinylVault should be displayed. 
 
+---
+
 Project Directory Overview: 
 VinylVault is designed using React and Vite. src/ contains the main application code, React components, page layouts, routing logic, and styling. public/ contains static Vite assets. node_modules contains npm dependencies.
+
+---
 
 Component Tree:
 ```
