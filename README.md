@@ -4,17 +4,23 @@ Prerequisites to install:
 - Node.js
 - npm
 - Git
+
 Confirm that each prerequisite is installed by running
 **{prerequisite_name} -v**
 for each in the command prompt.
 
 Install the project locally by opening a command prompt in the folder where you want this installed and running the following commands:
+
 **git clone https://github.com/n-sakowski/CSI3150-Assignment3.git**
+
 **cd CSI3150-Assignment3**
+
 **npm install**
 
 Next, start the application by running:
+
 **npm run dev**
+
 A localhost link will be provided, probably http://localhost:5173/. Here is where the VinylVault should be displayed. 
 
 Project Directory Overview: 
