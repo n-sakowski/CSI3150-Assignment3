@@ -1,6 +1,6 @@
 # Assignment 3: VinylVault Indie Record Online Store
 
-## Prerequisites to install:
+### Prerequisites to install:
 - Node.js
 - npm
 - Git
