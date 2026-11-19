@@ -1,6 +1,6 @@
-Assignment 3: VinylVault Indie Record Online Store
+*Assignment 3: VinylVault Indie Record Online Store
 
-Prerequisites to install:
+**Prerequisites to install:
 - Node.js
 - npm
 - Git
@@ -31,12 +31,12 @@ A localhost link will be provided, probably http://localhost:5173/. Here is wher
 
 ---
 
-Project Directory Overview: 
+**Project Directory Overview: 
 VinylVault is designed using React and Vite. src/ contains the main application code, React components, page layouts, routing logic, and styling. public/ contains static Vite assets. node_modules contains npm dependencies.
 
 ---
 
-Component Tree:
+**Component Tree:
 ```
 <App /> → src/App.jsx
   - State Ownership:
