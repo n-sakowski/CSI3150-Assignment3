@@ -21,73 +21,84 @@ Project Directory Overview:
 VinylVault is designed using React and Vite. src/ contains the main application code, React components, page layouts, routing logic, and styling. public/ contains static Vite assets. node_modules contains npm dependencies.
 
 Component Tree:
+
 Component Tree
+
 <App /> → src/App.jsx
-State Ownership:
-cart (Array): Stores albums and their quantities.
-isCartOpen (Boolean): Controls cart drawer visibility.
-Callback Handlers:
-onAddToCart(album)
-onRemoveFromCart(albumId)
-onUpdateQuantity(albumId, amount)
-onToggleCart()
-onCheckoutComplete()
-<Navbar /> → src/components/Navbar.jsx
-State: None.
-Props:
-cartCount (Number)
-onToggleCart (Function)
-Displays navigation and synchronized cart count.
-<Routes>
-<Route path="/" element={<CatalogPage />} />
-<CatalogPage /> → src/pages/CatalogPage.jsx
-State Ownership:
-selectedGenre (String)
-Props:
-albums (Array)
-onAddToCart (Function)
-<GenreFilterBar /> → src/components/GenreFilterBar.jsx
-State: None.
-Props:
-selectedGenre (String)
-onGenreChange (Function)
-Callback: onGenreChange(genre) updates the selected genre.
-<AlbumGrid /> → src/components/AlbumGrid.jsx
-State: None.
-Props:
-albums (Array)
-onAddToCart (Function)
-<AlbumCard /> → src/components/AlbumCard.jsx
-Rendered using .map() to display individual albums.
-State: None.
-Props:
-album (Object)
-onAddToCart (Function)
-Callback: onAddToCart(album).
-Navigation: /album/:albumId.
-<Route path="/album/:albumId" element={<AlbumDetailPage />} />
-<AlbumDetailPage /> → src/pages/AlbumDetailPage.jsx
-State: None.
-Props:
-albums (Array)
-onAddToCart (Function)
-Uses useParams() to identify the selected album.
-Callback: onAddToCart(album).
-<Route path="/checkout" element={<CheckoutPage />} />
-<CheckoutPage /> → src/pages/CheckoutPage.jsx
-State Ownership:
-shippingInfo (Object): Stores customer shipping information.
-orderConfirmed (Boolean): Tracks successful order submission.
-Props:
-cart (Array)
-onCheckoutComplete (Function)
-Callback: onCheckoutComplete() resets the active cart after successful checkout.
-<CartDrawer /> → src/components/CartDrawer.jsx
-State: None.
-Props:
-cart (Array)
-isCartOpen (Boolean)
-onToggleCart (Function)
-onUpdateQuantity (Function)
-onRemoveFromCart (Function)
-Displays cart items, manages quantities and calculates totals.
+  - State Ownership:
+    - cart (Array): Stores albums and their quantities.
+    - isCartOpen (Boolean): Controls cart drawer visibility.
+  - Callback Handlers:
+    - onAddToCart(album)
+    - onRemoveFromCart(albumId)
+    - onUpdateQuantity(albumId, amount)
+    - onToggleCart()
+    - onCheckoutComplete()
+
+  - <Navbar /> → src/components/Navbar.jsx
+    - State: None.
+    - Props:
+      - cartCount (Number)
+      - onToggleCart (Function)
+    - Displays navigation and synchronized cart count.
+
+  - <Routes>
+    - <Route path="/" element={<CatalogPage />} />
+      - <CatalogPage /> → src/pages/CatalogPage.jsx
+        - State Ownership:
+          - selectedGenre (String): Stores the currently selected genre.
+        - Props:
+          - albums (Array)
+          - onAddToCart (Function)
+
+        - <GenreFilterBar /> → src/components/GenreFilterBar.jsx
+          - State: None.
+          - Props:
+            - selectedGenre (String)
+            - onGenreChange (Function)
+          - Callback: onGenreChange(genre).
+
+        - <AlbumGrid /> → src/components/AlbumGrid.jsx
+          - State: None.
+          - Props:
+            - albums (Array)
+            - onAddToCart (Function)
+
+          - <AlbumCard /> → src/components/AlbumCard.jsx
+            - Rendered using .map() to display individual albums.
+            - State: None.
+            - Props:
+              - album (Object)
+              - onAddToCart (Function)
+            - Callback: onAddToCart(album).
+            - Navigation: /album/:albumId.
+
+    - <Route path="/album/:albumId" element={<AlbumDetailPage />} />
+      - <AlbumDetailPage /> → src/pages/AlbumDetailPage.jsx
+        - State: None.
+        - Props:
+          - albums (Array)
+          - onAddToCart (Function)
+        - Uses useParams() to identify the selected album.
+        - Callback: onAddToCart(album).
+
+    - <Route path="/checkout" element={<CheckoutPage />} />
+      - <CheckoutPage /> → src/pages/CheckoutPage.jsx
+        - State Ownership:
+          - shippingInfo (Object): Stores customer shipping information.
+          - orderConfirmed (Boolean): Tracks successful order submission.
+        - Props:
+          - cart (Array)
+          - onCheckoutComplete (Function)
+        - Callback: onCheckoutComplete() resets the cart after successful checkout.
+
+  - <CartDrawer /> → src/components/CartDrawer.jsx
+    - State: None.
+    - Props:
+      - cart (Array)
+      - isCartOpen (Boolean)
+      - onToggleCart (Function)
+      - onUpdateQuantity (Function)
+      - onRemoveFromCart (Function)
+    - Displays cart items, manages quantities, and calculates totals.
+
