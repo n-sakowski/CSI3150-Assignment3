@@ -12,9 +12,9 @@ function Navbar({ cart, onCartClick }) {
         </Link>
 
         <nav className="nav-actions">
-          <Link to="/" className="nav-link">
+          {/* <Link to="/" className="nav-link">
             Collection
-          </Link>
+          </Link> */}
 
           <button className="btn-cart-badge" onClick={onCartClick}>
             Cart

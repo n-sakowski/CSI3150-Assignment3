@@ -47,36 +47,41 @@ function App() {
     setCart((prevCart) => prevCart.filter((item) => item.id !== albumId));
   };
 
-  // Increase or decrease an album's quantity
-  const onUpdateQuantity = (albumId, amount) => {
+  // Increase quantity
+  const onIncrease = (albumId) => {
     setCart((prevCart) =>
       prevCart.map((item) => {
-        if (item.id !== albumId) {
-          return item;
-        }
+        if (item.id !== albumId) return item;
 
-        const newQuantity = Math.max(
-          1,
-          Math.min(item.stock, item.quantity + amount),
-        );
-
-        return { ...item, quantity: newQuantity };
+        return {
+          ...item,
+          quantity: Math.min(item.stock, item.quantity + 1),
+        };
       }),
     );
   };
 
-  // Toggle the cart drawer
-  const onToggleCart = () => {
-    setIsCartOpen((prevState) => !prevState);
+  // Decrease quantity
+  const onDecrease = (albumId) => {
+    setCart((prevCart) =>
+      prevCart.map((item) => {
+        if (item.id !== albumId) return item;
+
+        return {
+          ...item,
+          quantity: Math.max(1, item.quantity - 1),
+        };
+      }),
+    );
   };
 
-  // Calculate the cart subtotal
+  // Calculate cart subtotal
   const cartSubtotal = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
 
-  // Clear the cart after a successful checkout
+  // Complete checkout
   const onCheckoutComplete = () => {
     setCart([]);
     setIsCartOpen(false);
@@ -84,16 +89,7 @@ function App() {
 
   return (
     <>
-      <Navbar cart={cart} onToggleCart={onToggleCart} />
-
-      <CartDrawer
-        cart={cart}
-        isCartOpen={isCartOpen}
-        onToggleCart={onToggleCart}
-        onRemoveFromCart={onRemoveFromCart}
-        onUpdateQuantity={onUpdateQuantity}
-        cartSubtotal={cartSubtotal}
-      />
+      <Navbar cart={cart} onCartClick={() => setIsCartOpen(true)} />
 
       <Routes>
         <Route
@@ -119,6 +115,16 @@ function App() {
           }
         />
       </Routes>
+
+      <CartDrawer
+        cart={cart}
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        onIncrease={onIncrease}
+        onDecrease={onDecrease}
+        onRemove={onRemoveFromCart}
+        cartSubtotal={cartSubtotal}
+      />
     </>
   );
 }

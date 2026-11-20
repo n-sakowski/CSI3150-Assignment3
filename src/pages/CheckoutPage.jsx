@@ -139,6 +139,7 @@ function CheckoutPage({ cart, cartSubtotal, onCheckoutComplete }) {
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleChange}
+                placeholder="e.g. Amartya Sen"
                 required
               />
             </div>
@@ -152,6 +153,7 @@ function CheckoutPage({ cart, cartSubtotal, onCheckoutComplete }) {
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
+                placeholder="e.g. 502 Meadow Brook Rd"
                 required
               />
             </div>
@@ -165,6 +167,7 @@ function CheckoutPage({ cart, cartSubtotal, onCheckoutComplete }) {
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
+                placeholder="e.g. Rochester"
                 required
               />
             </div>
@@ -178,12 +181,13 @@ function CheckoutPage({ cart, cartSubtotal, onCheckoutComplete }) {
                 name="postalCode"
                 value={formData.postalCode}
                 onChange={handleChange}
+                placeholder="e.g. 49216"
                 required
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="cardDetails">Card Details (Demo Only)</label>
+              <label htmlFor="cardDetails">Card Details</label>
 
               <input
                 type="text"
@@ -191,7 +195,7 @@ function CheckoutPage({ cart, cartSubtotal, onCheckoutComplete }) {
                 name="cardDetails"
                 value={formData.cardDetails}
                 onChange={handleChange}
-                placeholder="Enter fictional test number"
+                placeholder="e.g. 1029384756473829"
                 autoComplete="off"
                 inputMode="numeric"
                 required
