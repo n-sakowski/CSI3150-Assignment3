@@ -3,7 +3,7 @@
 ========================= */
 
 :root {
-  --bg: #372038;
+  --bg: #482f49;
   --bg-cart: #262734;
   --surface: #d1c5ff;
   --text: #bdbeff;
@@ -11,6 +11,7 @@
   --muted-card: #000000;
   --border: #9d60ff;
   --primary: #170e92;
+  --primary-alt: #5d78ff;
   --primary-hover: #2e30ca;
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
@@ -222,6 +223,10 @@ a {
   letter-spacing: 0.05em;
 }
 
+.product-category-details {
+  color: var(--muted);
+}
+
 .product-title {
   font-size: 1.1rem;
   margin: 0.35rem 0;
@@ -245,6 +250,11 @@ a {
   font-weight: 700;
   margin: 0.5rem 0 1rem;
   color: var(--primary);
+}
+
+.product-price-details {
+  color: var(--primary-alt);
+  font-style: italic;
 }
 
 .product-stock {
@@ -482,7 +492,7 @@ a {
   border: 1px solid var(--border);
   border-radius: 6px;
   background: var(--surface);
-  color: var(--text);
+  color: var(--muted-card);
   outline: none;
 }
 
@@ -506,17 +516,21 @@ a {
   height: fit-content;
 }
 
+.order-summary-card-confirm {
+  color: white;
+}
+
 .order-summary-card h2 {
   margin-bottom: 1rem;
 }
 
 .order-summary-card > p {
-  margin: 1rem 0;
+  margin: 2rem;
   color: var(--muted-card);
 }
 
 .order-summary-card .btn {
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 .summary-row {

@@ -18,10 +18,7 @@ function CatalogPage({ albums, onAddToCart }) {
       <section className="catalog-hero">
         <h1>Welcome to VinylVault</h1>
 
-        <p>
-          Discover timeless records, legendary artists, and essential albums for
-          your collection.
-        </p>
+        <p>Browse our collection!</p>
       </section>
 
       <section>

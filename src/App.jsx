@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -12,7 +12,15 @@ import { ALBUMS } from "./data/albums";
 
 function App() {
   // Shared cart state
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("vinylVaultCart");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  // Save cart whenever it changes
+  useEffect(() => {
+    localStorage.setItem("vinylVaultCart", JSON.stringify(cart));
+  }, [cart]);
 
   // Shared cart drawer visibility
   const [isCartOpen, setIsCartOpen] = useState(false);

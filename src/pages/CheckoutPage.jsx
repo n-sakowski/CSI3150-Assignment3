@@ -58,7 +58,7 @@ function CheckoutPage({ cart, cartSubtotal, onCheckoutComplete }) {
   if (orderConfirmed) {
     return (
       <main className="main-content">
-        <div className="order-summary-card">
+        <div className="order-summary-card-confirm">
           <h1>Order Confirmed!</h1>
 
           <p>

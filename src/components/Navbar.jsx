@@ -8,7 +8,7 @@ function Navbar({ cart, onCartClick }) {
     <header className="site-header">
       <div className="header-inner">
         <Link to="/" className="brand-logo">
-          VinylVault
+          🎶VinylVault🎶
         </Link>
 
         <nav className="nav-actions">

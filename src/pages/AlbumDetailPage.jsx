@@ -32,13 +32,13 @@ function AlbumDetailPage({ albums, onAddToCart }) {
         </div>
 
         <div>
-          <span className="product-category">{album.genre}</span>
+          <span className="product-category-details">{album.genre}</span>
 
           <h1>{album.title}</h1>
 
           <h2>{album.artist}</h2>
 
-          <p className="product-price">${album.price.toFixed(2)}</p>
+          <p className="product-price-details">${album.price.toFixed(2)}</p>
 
           <p>{album.description}</p>
 
